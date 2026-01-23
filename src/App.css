@@ -1,0 +1,24 @@
+/* Hide scrollbar for webkit browsers (Chrome, Safari) */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Dashboard content scrollbar hide */
+.dashboard-content::-webkit-scrollbar {
+  display: none;
+}
+
+.dashboard-content {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar globally for overflow-y-auto elements */
+.overflow-y-auto::-webkit-scrollbar {
+  display: none;
+}
+
+.overflow-y-auto {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
