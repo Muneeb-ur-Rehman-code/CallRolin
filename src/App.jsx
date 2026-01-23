@@ -28,8 +28,8 @@ const ScrollToTop = () => {
 };
 function App() {
   const location = useLocation();
-  // const hideNavbar = location.pathname === '/dashboard' ||   location.pathname === '/agent-dashboard';
-  const hideNavbar = true;
+  const hideNavbar = location.pathname === '/dashboard' ||   location.pathname === '/agent-dashboard';
+
   const hideFooter = location.pathname === '/dashboard' ||   location.pathname === '/agent-dashboard';
 
 
