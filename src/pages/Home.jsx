@@ -75,6 +75,53 @@ const AnimatedCounter = ({ end, suffix = "", duration = 2000 }) => {
 };
 
 const Home = () => {
+  // Audio state management
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+  const sectionRef = useRef(null);
+
+  // Handle play/pause toggle
+  const toggleAudio = () => {
+    if (!audioRef.current) return;
+
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  // Handle audio ended
+  const handleAudioEnded = () => {
+    setIsPlaying(false);
+  };
+
+  // Intersection Observer to stop audio when scrolled away
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries[0].isIntersecting && isPlaying) {
+          audioRef.current?.pause();
+          setIsPlaying(false);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [isPlaying]);
+
   return (
     <>
       {/* Hero Section */}
@@ -91,33 +138,6 @@ const Home = () => {
 
         {/* Animated SVG Background Elements */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          {/* Floating Waveform Left */}
-          {/* <svg
-            className="absolute left-0 top-1/4 w-48 h-48 opacity-10 animate-pulse"
-            viewBox="0 0 200 200"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill="#ffffff"
-              d="M45,-78C58.4,-70.5,69,-57.3,75.9,-42.3C82.8,-27.4,85.9,-10.7,84.5,5.3C83.1,21.3,77.1,36.6,67.8,48.9C58.4,61.2,45.7,70.5,31.8,75.8C17.9,81.1,2.9,82.4,-12.3,80.8C-27.5,79.2,-43,74.7,-55.6,66.1C-68.2,57.5,-77.9,44.8,-82.8,30.2C-87.7,15.6,-87.8,-0.9,-83.5,-15.8C-79.2,-30.7,-70.5,-44,-58.9,-54.3C-47.3,-64.6,-32.8,-72,-17.4,-76.8C-2,-81.6,14.3,-83.8,28.4,-80.9C42.5,-78,54.4,-70,45,-78Z"
-              transform="translate(100 100)"
-            />
-          </svg> */}
-
-          {/* Floating Waveform Right */}
-          {/* <svg
-            className="absolute right-0 bottom-1/4 w-56 h-56 opacity-10 animate-pulse"
-            style={{ animationDelay: "1s" }}
-            viewBox="0 0 200 200"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill="#ffffff"
-              d="M39.3,-65.5C50.9,-58.2,60.3,-47.1,67.4,-34.2C74.5,-21.3,79.3,-6.6,78.5,7.7C77.7,21.9,71.3,35.7,62.1,47.3C52.9,58.9,41,68.3,27.7,73.4C14.4,78.5,-0.3,79.3,-14.8,76.2C-29.3,73.1,-43.6,66.1,-54.8,55.4C-66,44.7,-74.1,30.3,-77.3,14.7C-80.5,-0.9,-78.8,-17.7,-72.6,-32.4C-66.4,-47.1,-55.7,-59.7,-42.8,-66.5C-29.9,-73.3,-15,-74.3,-0.6,-73.3C13.8,-72.3,27.7,-69.3,39.3,-65.5Z"
-              transform="translate(100 100)"
-            />
-          </svg> */}
-
           {/* Grid Pattern Overlay */}
           <div
             className="absolute inset-0 opacity-5"
@@ -382,36 +402,83 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Section 3: Voice AI That Works */}
-      <section className="relative bg-black py-24 md:py-32 px-6">
+      {/* Section 3: Voice AI That Works - UPDATED WITH AUDIO */}
+      <section ref={sectionRef} className="relative bg-black py-24 md:py-32 px-6">
         <div className="max-w-7xl mx-auto">
+          {/* Hidden Audio Element */}
+          <audio
+            ref={audioRef}
+            src="/call-rolin.mp3"
+            onEnded={handleAudioEnded}
+            preload="auto"
+          />
+
           {/* Glass Card Container with padding */}
           <div className="relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl overflow-hidden shadow-2xl p-6 lg:p-8">
             {/* Video - Full Width and Height */}
             <div className="w-full h-[400px] lg:h-[500px] relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 group">
-              <SoundWaveAnimation />
+              <SoundWaveAnimation isPlaying={isPlaying} />
 
-              {/* Overlay Content */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              {/* Overlay Content - Clickable Mic */}
+              <div className="absolute inset-0 flex items-center justify-center">
                 <div className="relative z-20 text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-4 animate-pulse">
-                    <svg
-                      className="w-8 h-8 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-                      />
-                    </svg>
-                  </div>
-                  <p className="text-sm font-medium text-white/70 tracking-widest uppercase">
-                    Live Voice Processing
+                  {/* Clickable Mic Button */}
+                  <button
+                    onClick={toggleAudio}
+                    className={`inline-flex items-center justify-center w-20 h-20 rounded-full backdrop-blur-md border transition-all duration-500 cursor-pointer hover:scale-110 active:scale-95 ${
+                      isPlaying
+                        ? "bg-white/20 border-white/40 shadow-lg shadow-white/20"
+                        : "bg-white/10 border-white/20 hover:bg-white/15 hover:border-white/30"
+                    }`}
+                  >
+                    {/* Ripple effect when playing */}
+                    {isPlaying && (
+                      <>
+                        <span className="absolute inset-0 rounded-full bg-white/20 animate-ping"></span>
+                        <span
+                          className="absolute inset-0 rounded-full bg-white/10 animate-ping"
+                          style={{ animationDelay: "0.2s" }}
+                        ></span>
+                      </>
+                    )}
+
+                    {/* Mic or Pause Icon */}
+                    {isPlaying ? (
+                      <svg
+                        className="w-8 h-8 text-white relative z-10"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        className="w-8 h-8 text-white relative z-10"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+                        />
+                      </svg>
+                    )}
+                  </button>
+
+                  {/* Status Text */}
+                  <p className="mt-4 text-sm font-medium text-white/70 tracking-widest uppercase">
+                    {isPlaying ? "Now Playing" : "Click to Play Demo"}
                   </p>
+                 
                 </div>
               </div>
             </div>
@@ -527,11 +594,9 @@ const Home = () => {
       </section>
 
       {/* Section 6: Smart Insight */}
-
       <SmartInsight />
 
       {/* Section 7: Footer */}
-
       <section className="relative -mt-24 bg-black py-24 md:py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -628,11 +693,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Section 8: Voice Experience */}
-      {/*  */}
-
-      {/* <VoiceExperience /> */}
 
       {/* Add custom animation class */}
       <style jsx>{`

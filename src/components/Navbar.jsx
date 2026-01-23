@@ -42,7 +42,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-28">
           {/* Left Side: Logo + Navigation Links */}
-          <div className={`flex items-center space-x-8 ${leftSectionClasses} px-8 py-5 rounded-full transition-all duration-500`}>
+          <div className={`flex items-center space-x-8 ${leftSectionClasses} px-5 py-3 rounded-full transition-all duration-500`}>
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3 group relative">
               <div className="relative">
@@ -89,7 +89,7 @@ const Navbar = () => {
           </div>
 
           {/* Right Side: Buttons */}
-          <div className={`hidden lg:flex items-center space-x-4 ${rightSectionClasses} px-8 py-5 rounded-full transition-all duration-500`}>
+          <div className={`hidden lg:flex items-center space-x-4 ${rightSectionClasses} px-5 py-3 rounded-full transition-all duration-500`}>
             {/* <Link
               to="/auth"
               className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
