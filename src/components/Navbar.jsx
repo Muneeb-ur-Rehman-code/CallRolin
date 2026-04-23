@@ -22,7 +22,8 @@ const Navbar = () => {
 
   const leftNavLinks = [
     { path: '/', label: 'Home' },
-    { path: '/about', label: 'Company' }
+    { path: '/about', label: 'Company' },
+    { path: '/team', label: 'Team' }
   ];
 
   const navContainerClasses = isScrolled 

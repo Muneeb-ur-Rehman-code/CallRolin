@@ -15,7 +15,9 @@ import SmartInsight from './components/SmartInsight.jsx'
 import VoiceExperience from './components/VoiceExperience.jsx'
 import Footer from './components/Footer.jsx'
 import P_policy from './pages/P_policy.jsx'
+import Team from './pages/Team.jsx'
 import Term_of_Service from './pages/Term_of_Service.jsx'
+
 import SmoothScroll from './components/SmoothScroll.jsx';
 import AgentDashboard from './pages/AgentDashboard.jsx';
 // --- Scroll-to-top helper ---
@@ -43,6 +45,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/about" element={<About />} />
+          <Route path="/team" element={<Team />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/agent-dashboard" element={<AgentDashboard />} />

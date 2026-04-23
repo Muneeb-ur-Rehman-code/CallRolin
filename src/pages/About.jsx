@@ -420,6 +420,8 @@ const About = () => {
       </section>
 
       {/* Final CTA Section - Creative Design */}
+
+      {/* Final CTA Section - Creative Design */}
       <section className="relative py-24 md:py-32 px-6">
         <div className="max-w-5xl mx-auto w-full">
           <div className="relative">
