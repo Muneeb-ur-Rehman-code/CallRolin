@@ -69,6 +69,17 @@ const Footer = () => {
                   Voice Experience
                 </a>
               </li>
+              <li>
+                <a
+                  href="https://tts.callrolin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Urdu Voice Generator"
+                  className="text-gray-300 hover:text-white transition-colors text-base"
+                >
+                  CallRolin TTS
+                </a>
+              </li>
             </ul>
           </div>
 

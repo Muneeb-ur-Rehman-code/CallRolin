@@ -86,6 +86,15 @@ const Navbar = () => {
                   {link.label}
                 </Link>
               ))}
+              <a
+                href="https://tts.callrolin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Urdu Voice Generator"
+                className="text-sm font-medium transition-all duration-300 text-gray-300 hover:text-white"
+              >
+                CallRolin TTS
+              </a>
             </div>
           </div>
 
@@ -149,6 +158,16 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
+          <a
+            href="https://tts.callrolin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Urdu Voice Generator"
+            onClick={() => setIsOpen(false)}
+            className="block px-6 py-4 text-base font-medium rounded-2xl transition-all duration-300 text-gray-300 hover:bg-white/10 hover:text-white border border-transparent hover:border-white/10"
+          >
+            CallRolin TTS
+          </a>
           {/* <Link
             to="/auth"
             onClick={() => setIsOpen(false)}
